@@ -1,0 +1,49 @@
+{% extends "general_pages/base.html" %}
+
+{% block title %}
+<title>Care Connect | Patient Details </title>
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 hero-header mb-5">
+      <div class="row py-3">
+          <div class="col-12 text-center">
+              <h1 class="display-3 text-white animated zoomIn">Accounts</h1>
+              <a href="{% url 'homepage' %}" class="h4 text-white">Home</a>
+              <i class="far fa-circle text-white px-2"></i>
+              <a href="{% url 'patients' %}" class="h4 text-white">Accounts</a>
+          </div>
+      </div>
+  </div>
+  <!-- Hero End -->
+
+    <div class="container">
+      <div class="row mt-5">
+          <div class="card mt-3">
+            <div class="card-body">
+              {% for appointment in appointments %}
+              <h5 class="card-title">Appointment {{ forloop.counter }}</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Doctor: {{ appointment.doctor }}</li>
+                <li class="list-group-item">Appointment Type: {{ appointment.service }} Appointment</li>
+                <li class="list-group-item">Health Complaint: {{ appointment.health_issue }}</li>
+                <li class="list-group-item">Appointment Date: {{ appointment.date }}</li>
+                <li class="list-group-item">Appointment Time: {{ appointment.time }}</li>
+                <li class="list-group-item">Bill Amount: Rs.{{ appointment.bill }}</li>
+                {% if appointment.bill_paid == True %}
+                <li class="list-group-item">Bill Status: Paid</li>
+                {% else %}
+                <li class="list-group-item">Bill Status: Pending --- <a href="{% url 'paybill' appointment.id %}">Pay Bill Amount</a></li>
+                {% endif %}
+                <br>
+                <br>
+              </ul>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends "general_pages/base.html" %}
+
+{% block title %}
+<title>Care Connect | Patients </title>
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 hero-header mb-5">
+      <div class="row py-3">
+          <div class="col-12 text-center">
+              <h1 class="display-3 text-white animated zoomIn">Patients</h1>
+              <a href="{% url 'homepage' %}" class="h4 text-white">Home</a>
+              <i class="far fa-circle text-white px-2"></i>
+              <a href="{% url 'patients' %}" class="h4 text-white">Patients</a>
+          </div>
+      </div>
+  </div>
+  <!-- Hero End -->
+
+<div class="page-wrapper">
+  <div class="cart shopping">
+    <div class="container">
+      <div class="row">
+        <div class="">
+          <div class="block">
+            <div class="product-list">
+              <form method="post">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="">Patient Name</th>
+                      <th class="">Patient Details</th>
+                    </tr>
+                  </thead>
+				  {% for patient in patients %}
+                  <tbody>
+                    <tr class="">
+                      <td class="">{{ patient.user.first_name }}</td>
+                      <td class="">
+                        <a href="{% url 'patient-detail' patient.user.id %}" >More Info</a>
+                      </td>
+                    </tr>
+                  </tbody>
+				  {% endfor %}
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

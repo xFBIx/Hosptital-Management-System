@@ -1,0 +1,22 @@
+{% extends "general_pages/base.html" %}
+
+{% block title %}
+<title>Care Connect | Logout</title>
+{% endblock title %}
+
+{% block content %}
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <h3 class="text-center" font-weight="bold">You have been successfully logged out!</h3> 
+          <p class="mt-20">Logged out by mistake ? <a href="{% url 'login-staff' %}">Login Again</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

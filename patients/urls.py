@@ -1,6 +1,13 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from . import views as patient_views
+from .views import loginview
 
 urlpatterns = [
-    path('about/', views.about, name='about'),
+    path('make-profile/', patient_views.make_profile, name='make-profile'),
+    path('accounts/login/', loginview.as_view(), name='account_login'),
+    path('accounts/', include('allauth.urls')),
+    path('appointment/', patient_views.appointment, name='appointment'),
+    path('profile/', patient_views.profile, name='profile'),
+    path('account/', patient_views.account, name='account'),
+    path('paybill/<int:pk>', patient_views.paybill, name='paybill'),
 ]

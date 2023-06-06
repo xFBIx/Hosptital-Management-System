@@ -1,0 +1,40 @@
+{% extends "general_pages/base.html" %}
+
+{% block title %}
+<title>Care Connect | Profile Details </title>
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 hero-header mb-5">
+      <div class="row py-3">
+          <div class="col-12 text-center">
+              <h1 class="display-3 text-white animated zoomIn">Patient Profile</h1>
+              <a href="{% url 'homepage' %}" class="h4 text-white">Home</a>
+              <i class="far fa-circle text-white px-2"></i>
+              <a href="{% url 'profile' %}" class="h4 text-white">Profile</a>
+          </div>
+      </div>
+  </div>
+  <!-- Hero End -->
+
+  <div class="container">
+    <div class="row mt-5">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Patient Information</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Username: {{ user.username }}</li>
+              <li class="list-group-item">First Name: {{ user.first_name }}</li>
+              <li class="list-group-item">Last Name: {{ user.last_name }}</li>
+              <li class="list-group-item">Gender: {{ user.profile.gender }}</li>
+              <li class="list-group-item">Email: {{ user.email }}</li>
+              <li class="list-group-item">History of Illness: {{ user.profile.history_of_illness }}</li>
+              <li class="list-group-item">Record of prescriptions:{{ user.profile.record_of_prescriptions }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

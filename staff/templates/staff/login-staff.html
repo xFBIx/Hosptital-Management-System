@@ -1,0 +1,35 @@
+{% extends "general_pages/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>Care Connect | Login</title>
+{% endblock title %}
+
+{% block content %}
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+
+            <form method="POST">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Staff Login Page</legend>
+                  {{ form|crispy}}
+              </fieldset>
+              <div class="form-group">
+                  <button class="btn btn-outline-info" type="submit">Login</button>
+              </div>
+            </form>
+          
+          <p class="mt-20">New to this Site ? <a href="{% url 'register-staff' %}">Sign Up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
