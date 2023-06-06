@@ -43,14 +43,7 @@ The web application can be hosted on PythonAnywhere or a similar hosting service
 Installation
 To set up the hospital management system and web app locally, follow these steps:
 
-Clone the repository from https://github.com/xFBIx/Hosptital-Management-System.git.
+Clone the repository from <https://github.com/xFBIx/Hosptital-Management-System.git>.
 Install the required dependencies by running pip install -r requirements.txt.
 Run the application using the command python manage.py runserver.
-Access the web app through your browser at http://localhost:8000 or the appropriate URL.
-
-
-
-
-
-
-
+Access the web app through your browser at <http://localhost:8000> or the appropriate URL.
