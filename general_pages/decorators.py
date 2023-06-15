@@ -36,3 +36,11 @@ def allowed_users(allowed_roles=''):
                 return redirect('homepage')
         return wrapped_func
     return decorator
+
+def chat_access(view_func):
+    def wrapped_func(request, *args, **kwargs):
+        if request.user.is_authenticated :
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('homepage')
+    return wrapped_func

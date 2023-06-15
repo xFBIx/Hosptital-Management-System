@@ -19,6 +19,21 @@
   </div>
   <!-- Hero End -->
 
+<div class="container">
+  <div class="row">
+    <div class="input-group" style="max-width: 600px;">
+      <form method="post">
+      {% csrf_token %}
+      <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type patient name" name="value" required>
+      <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+      <a href="{% url 'patients' %}" class="btn btn-primary px-4">Reset</a>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
 <div class="page-wrapper">
   <div class="cart shopping">
     <div class="container">
@@ -26,12 +41,14 @@
         <div class="">
           <div class="block">
             <div class="product-list">
+              {% if patients %}
               <form method="post">
                 <table class="table">
                   <thead>
                     <tr>
                       <th class="">Patient Name</th>
-                      <th class="">Patient Details</th>
+                      <th class=""></th>
+                      <th class=""></th>
                     </tr>
                   </thead>
 				  {% for patient in patients %}
@@ -39,13 +56,19 @@
                     <tr class="">
                       <td class="">{{ patient.user.first_name }}</td>
                       <td class="">
-                        <a href="{% url 'patient-detail' patient.user.id %}" >More Info</a>
+                        <a href="{% url 'chat' patient.user.username %}" >Message {{ patient.user.first_name }}</a>
+                      </td>
+                      <td class="">
+                      <a href="{% url 'patient-detail' patient.user.id %}" >More Info</a>
                       </td>
                     </tr>
                   </tbody>
 				  {% endfor %}
                 </table>
               </form>
+              {% else %}
+              <p>No patients found</p>
+              {% endif %}
             </div>
           </div>
         </div>

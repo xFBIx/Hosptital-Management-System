@@ -1,0 +1,43 @@
+{% extends "general_pages/base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block title %}
+<title>Care Connect | Patient Profile Table </title>
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 hero-header mb-5">
+      <div class="row py-3">
+          <div class="col-12 text-center">
+              <h1 class="display-3 text-white animated zoomIn">Patient Profile Table</h1>
+              <a href="{% url 'homepage' %}" class="h4 text-white">Home</a>
+              <i class="far fa-circle text-white px-2"></i>
+              <a href="{% url 'profile-table' %}" class="h4 text-white">Patient Profile Table</a>
+          </div>
+      </div>
+  </div>
+  <!-- Hero End -->
+
+  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> {% endcomment %}
+
+  <div class="container">
+    <div class="row mt-5">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Patient Profile Table:</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{% render_table table %}</li>
+                {% comment %} {% for table in tables %}
+                {% render_table table1 %}
+                {% endfor %} {% endcomment %}
+                {% comment %} {% render_table table1 %}
+                {% render_table table2 %} {% endcomment %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+{% endblock content %}

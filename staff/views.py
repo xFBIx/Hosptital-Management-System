@@ -9,9 +9,8 @@ from django.contrib.auth.decorators import login_required
 from general_pages.decorators import allowed_users
 from patients.models import Profile, Appointment
 from django.contrib.auth.models import User
-
-# def about(request):
-#     return render(request, 'general_pages/about.html')
+from django_tables2 import SingleTableView
+import django_tables2 as tables
 
 class LoginView(auth_views.LoginView):
     next_page = None
@@ -49,7 +48,12 @@ def register_staff(request):
 @login_required(login_url='login-staff')
 @allowed_users(allowed_roles='Staff')
 def patients(request):
-    context = { 'patients': Profile.objects.all() }
+    if request.method == 'POST':
+        value = request.POST.get('value')
+        data = Profile.objects.all().filter(user__first_name__contains=value)
+        context = { 'patients': data }
+    else:
+        context = { 'patients': Profile.objects.all() }
     return render(request, 'staff/patients.html', context)
 
 @login_required(login_url='login-staff')
@@ -57,3 +61,21 @@ def patients(request):
 def patient_detail(request, pk):
     context = { 'user': User.objects.get(id=pk), 'appointments': Appointment.objects.all().filter(patient = pk)}
     return render(request, 'staff/patient-detail.html', context)
+
+@login_required(login_url='login-staff')
+@allowed_users(allowed_roles='Staff')
+def profile_table(request):
+    context = { 'patients': Profile.objects.all() }
+    return render(request, 'staff/profile-table.html', context)
+
+class PersonTable(tables.Table):
+    class Meta:
+        model = Profile
+        template_name = "django_tables2/bootstrap.html"
+        fields = ("user.username", "user.first_name", "user.last_name", "user.email", "gender", "history_of_illness", "record_of_prescriptions")
+        
+class PersonListView(SingleTableView):
+    model = Profile
+    table_class = PersonTable
+    template_name = 'staff/profile-table.html'
+    

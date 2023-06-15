@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'channels',
+    'django_tables2'
 ]
 
 SITE_ID = 1
@@ -166,3 +168,10 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_FORMS = {'signup': 'patients.forms.CustomSignupForm',}
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ASGI_APPLICATION = "CareConnect.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer",
+    }
+}

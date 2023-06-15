@@ -33,9 +33,10 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'general_pages/css/style.css' %}" rel="stylesheet">
+    {% block refresh %}{% endblock %}
 </head>
 
-<body>
+<body onload = "JavaScript:AutoRefresh(5000);">
     <!-- Topbar Start -->
     <div class="container-fluid bg-light ps-5 pe-0 d-none d-lg-block">
         <div class="row gx-0">
@@ -82,10 +83,12 @@
                 <a href="{% url 'homepage' %}" class="nav-item nav-link">Home</a>
                 {% if user.is_authenticated and request.user|has_group:'Staff' %}
                 <a href="{% url 'patients' %}" class="nav-item nav-link">Patients</a>
+                <a href="{% url 'profile-table' %}" class="nav-item nav-link">Patient profile table</a>
                 {% endif %}
                 {% if user.is_authenticated and request.user|has_group:'Patient' %}
                 <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a>
                 <a href="{% url 'account' %}" class="nav-item nav-link">Accounts</a>
+                <a href="{% url 'chat' user.username %}" class="nav-item nav-link">Message Staff</a>
                 {% endif %}
                 <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                 <a href="{% url 'about' %}" class="nav-item nav-link">About Us</a>

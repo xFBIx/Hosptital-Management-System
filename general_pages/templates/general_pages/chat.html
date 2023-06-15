@@ -1,0 +1,80 @@
+{% extends "general_pages/base.html" %}
+
+{% block title %}
+<title>Care Connect | Chat</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-9">
+            <form>
+                <div class="form-group">
+                    {% if request.user.groups.all.0.name == 'Patient' %}
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">Staff Chatroom</label>
+                    {% else %}
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">You are now messaging {{ chat_box_name }}</label>
+                    {% endif %}
+                    <textarea class="form-control" id="chat-text" readonly rows="10"></textarea><br>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Type your message here" id="input" type="text"></br>
+                </div>
+                <input class="btn btn-secondary btn-lg btn-block" id="submit" type="button" value="Send">
+            </form>
+        </div>
+    </div>
+</div>
+
+{{ request.user.groups.all.0.name|json_script:"user_group"}}
+{{ request.user.first_name|json_script:"user_username" }}
+{{ chat_box_name|json_script:"room-name" }}
+
+<script>
+    const user_username = JSON.parse(document.getElementById('user_username').textContent);
+    const user_group = JSON.parse(document.getElementById('user_group').textContent);
+    document.querySelector('#submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': user_username,
+            'group': user_group,
+        }));
+        messageInputDom.value = '';
+    };
+
+
+
+
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    const chatSocket = new WebSocket(
+        'ws://' +
+        window.location.host +
+        '/ws/chat/' +
+        roomName +
+        '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        console.log(data)
+        if (user_group == 'Patient') {
+            if (data.group == 'Staff') {
+                document.querySelector('#chat-text').value += ('Staff Member: ' + data.message + '\n')
+            } else {
+                document.querySelector('#chat-text').value += ('You: ' + data.message + '\n')
+            }
+        } else {
+            if (data.group == 'Staff' && data.username == user_username) {
+                document.querySelector('#chat-text').value += ('You: ' + data.message + '\n')
+            } else {
+                document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
+            }
+        }
+    }
+</script>
+
+{% endblock content %}
