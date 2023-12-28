@@ -1,4 +1,4 @@
-# Hosptital-Management-System.
+# Hosptital-Management-System!
 
 Hospital Management System and Web App.
 This is a hospital management system and web application that allows patients to book available slots in the hospital through an online portal. The system provides a convenient way for patients to schedule appointments with various doctors and manage their medical information.
